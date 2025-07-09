@@ -25,7 +25,7 @@ $html = <<<HTML
     <h1>    
         <div style="text-align: center;">見積書</div>
     </h1><br>
-    <table style ="border-spacing: 0; font-size:17px;"><tr><td>$data[coname]</td></tr><tr><td>住所:$data[coaddress]</td><tr><tr><td>Tell:$data[cotel]</td></tr></table>
+    <table style ="border-spacing: 0; font-size:17px;"><tr><td>$data[coname]</td></tr><tr><td>住所:$data[coaddress]</td></tr><tr><td>Tell:$data[cotel]</td></tr></table>
     <div style="text-align: right;">No:$data[no]</div><br>
     <div style="text-align: right;">発行日:$data[day]</div><br><br>
     <table style="width: 20%; margin-left: auto; margin-right: 0; border-spacing: 0; font-size:17px;"><tr><td>$data[clname]<td></tr><tr><td>住所:$data[claddress]</td></tr><tr><td>Tell:$data[cltel]</td></tr><tr><td>E-mail:$data[clmaile]</td></tr></table><br>
