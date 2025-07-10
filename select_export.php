@@ -1,14 +1,5 @@
-<!DOCTYPE html>
-<html lanb="ja">
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="Content-TYPE" content="text/html; charset=UTF-8">
-    <title>出力形式選択</title>
-</head>
-
-<body>
-    <?php
+<?php
+    session_start();
     $data = [
         'coname' => '北九', //受注者名
         'coaddress' => '福岡県北九州市', //受注者住所
@@ -33,43 +24,50 @@
 
     $orders = [
         [
-            'order' => 'あれ', //項目
-            'quantity' => 3, //数量
-            'unitprice' => 500, //単価
+            'order' => 'モニター', //項目
+            'quantity' => 5, //数量
+            'unitprice' => 19800, //単価
             'taxrate' => 10, //税率
             'amount' => 0 //税抜き金額
         ],
         [
-            'order' => 'それ', //項目
+            'order' => 'LANケーブル', //項目
             'quantity' => 6, //数量
-            'unitprice' => 650, //単価
+            'unitprice' => 1200, //単価
             'taxrate' => 10, //税率
             'amount' => 0 //税抜き金額
         ],
         [
-            'order' => 'これ', //項目
+            'order' => 'USBメモリ', //項目
             'quantity' => 10, //数量
-            'unitprice' => 1000, //単価
+            'unitprice' => 800, //単価
             'taxrate' => 8, //税率
             'amount' => 0 //税抜き金額
         ],
         [
-            'order' => 'それら', //項目
+            'order' => 'SDカード', //項目
             'quantity' => 20, //数量
-            'unitprice' => 750, //単価
+            'unitprice' => 1280, //単価
             'taxrate' => 8, //税率
             'amount' => 0 //税抜き金額
         ],
         [
-            'order' => 'これら', //項目
+            'order' => 'USBケーブル', //項目
             'quantity' => 15, //数量
-            'unitprice' => 200, //単価
+            'unitprice' => 720, //単価
             'taxrate' => 8, //税率
             'amount' => 0 //税抜き金額
         ],
         [
-            'order' => 'あれら', //項目
-            'quantity' => 3, //数量
+            'order' => 'マウス', //項目
+            'quantity' => 5, //数量
+            'unitprice' => 1350, //単価
+            'taxrate' => 10, //税率
+            'amount' => 0 //税抜き金額
+        ],
+        [
+            'order' => 'キーボード', //項目
+            'quantity' => 5, //数量
             'unitprice' => 1500, //単価
             'taxrate' => 10, //税率
             'amount' => 0 //税抜き金額
@@ -94,6 +92,18 @@
 
     $_SESSION['data'] = $data;
     $_SESSION['orders'] = $orders;
+?>
+<!DOCTYPE html>
+<html lanb="ja">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-TYPE" content="text/html; charset=UTF-8">
+    <title>出力形式選択</title>
+</head>
+
+<body>
+    <?php
     echo '[受注者]<br><table style ="border-spacing: 0; font-size:17px;"><tr><td>' . $data['coname'] . '</td></tr><tr><td>住所:' . $data['coaddress'] . '</td></tr><tr><td>Tell:' . $data['cotel'] . '</td></tr></table>';
     echo '[発注者]<table style ="border-spacing: 0; font-size:17px;"><tr><td>' . $data['clname'] . '</td></tr><tr><td>住所:' . $data['claddress'] . '</td></tr><tr><td>Tell:' . $data['cltel'] . '</td></tr><tr><td>メールアドレス:' . $data['clmaile'] . '</td></tr></table>';
     ?>
