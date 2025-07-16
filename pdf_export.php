@@ -1,6 +1,22 @@
 <?php
+
+declare(strict_types=1);
 require 'vendor/autoload.php';
+
 session_start();
+$data = $_SESSION['data'] ?? [];
+$orders = $_SESSION['orders'] ?? [];
+
+// セッションに必要な情報が揃っているかチェック
+if (empty($data) || !is_array($orders)) {
+    throw new RuntimeException('必要な見積データがセッション内にありません。');
+}
+
+// 出力用のHTMLエスケープ関数
+function h(string $s): string
+{
+    return htmlspecialchars($s, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+}
 
 $mpdf = new \Mpdf\Mpdf([
     'tempDir' => __DIR__ . '/tmp',
@@ -8,10 +24,6 @@ $mpdf = new \Mpdf\Mpdf([
     'format' => 'A4',
     'orientation' => 'P',
 ]);
-
-$data = $_SESSION['data'];
-
-$orders = $_SESSION['orders'];
 
 $html = <<<HTML
 <!DOCTYPE html>
@@ -118,4 +130,3 @@ HTML;
 $mpdf->WriteHTML($html);
 $mpdf->Output(); // ブラウザに表示
 exit();
-?>
