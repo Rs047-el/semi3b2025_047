@@ -1,97 +1,100 @@
 <?php
-    session_start();
-    $data = [
-        'coname' => '北九', //受注者名
-        'coaddress' => '福岡県北九州市', //受注者住所
-        'cotel' => '092-8765-4321', //受注者TEL
-        'no' => 1, //ナンバー
-        'day' => '2025/7/2', //発行日
-        'esprice' => '',
-        'deadline' => '2025/7/28', //期限
-        'clname' => '九州産業', //発注者名
-        'claddress' => '福岡県福岡市東区', //発注者住所
-        'cltel' => '092-1234-5678', //発注者TEL
-        'clmaile' => 'kyusan*******@kyusan.ac.jp', //発注者メールアドレス
-        'cn10taxamount' => 0, //消費税10％ 税抜合計
-        'cn10total' => 0,
-        'cn8taxamount' => 0, //消費税8％ 税抜合計
-        'cn8total' => 0,
-        'cntaxamount' => 0, //小計 
-        'subtotal' => 0, //消費税額
-        'total'  => '', //合計
-        'remarks'  => '特になし' //備考
-    ];
 
-    $orders = [
-        [
-            'order' => 'モニター', //項目
-            'quantity' => 5, //数量
-            'unitprice' => 19800, //単価
-            'taxrate' => 10, //税率
-            'amount' => 0 //税抜き金額
-        ],
-        [
-            'order' => 'LANケーブル', //項目
-            'quantity' => 6, //数量
-            'unitprice' => 1200, //単価
-            'taxrate' => 10, //税率
-            'amount' => 0 //税抜き金額
-        ],
-        [
-            'order' => 'USBメモリ', //項目
-            'quantity' => 10, //数量
-            'unitprice' => 800, //単価
-            'taxrate' => 8, //税率
-            'amount' => 0 //税抜き金額
-        ],
-        [
-            'order' => 'SDカード', //項目
-            'quantity' => 20, //数量
-            'unitprice' => 1280, //単価
-            'taxrate' => 8, //税率
-            'amount' => 0 //税抜き金額
-        ],
-        [
-            'order' => 'USBケーブル', //項目
-            'quantity' => 15, //数量
-            'unitprice' => 720, //単価
-            'taxrate' => 8, //税率
-            'amount' => 0 //税抜き金額
-        ],
-        [
-            'order' => 'マウス', //項目
-            'quantity' => 5, //数量
-            'unitprice' => 1350, //単価
-            'taxrate' => 10, //税率
-            'amount' => 0 //税抜き金額
-        ],
-        [
-            'order' => 'キーボード', //項目
-            'quantity' => 5, //数量
-            'unitprice' => 1500, //単価
-            'taxrate' => 10, //税率
-            'amount' => 0 //税抜き金額
-        ]
-    ];
+declare(strict_types=1);
+session_start();
+$data = [
+    'coname' => '北九', //受注者名
+    'coaddress' => '福岡県北九州市', //受注者住所
+    'cotel' => '092-8765-4321', //受注者TEL
+    'no' => 1, //ナンバー
+    'day' => '2025/7/2', //発行日
+    'esprice' => '',
+    'deadline' => '2025/7/28', //期限
+    'clname' => '九州産業', //発注者名
+    'claddress' => '福岡県福岡市東区', //発注者住所
+    'cltel' => '092-1234-5678', //発注者TEL
+    'clmaile' => 'kyusan*******@kyusan.ac.jp', //発注者メールアドレス
+    'cn10taxamount' => 0, //消費税10％ 税抜合計
+    'cn10total' => 0,
+    'cn8taxamount' => 0, //消費税8％ 税抜合計
+    'cn8total' => 0,
+    'cntaxamount' => 0, //小計 
+    'subtotal' => 0, //消費税額
+    'total'  => '', //合計
+    'remarks'  => '特になし' //備考
+];
 
-    for ($i = 0; $i < count($orders); $i++) {
-        $orders[$i]['amount'] = $orders[$i]['quantity'] * $orders[$i]['unitprice'];
-        if ($orders[$i]['taxrate'] == 10) {
-            $data['cn10taxamount'] += $orders[$i]['amount'];
-        } else {
-            $data['cn8taxamount'] += $orders[$i]['amount'];
-        }
+$orders = [
+    [
+        'order' => 'モニター', //項目
+        'quantity' => 5, //数量
+        'unitprice' => 19800, //単価
+        'taxrate' => 10, //税率
+        'amount' => 0 //税抜き金額
+    ],
+    [
+        'order' => 'LANケーブル', //項目
+        'quantity' => 6, //数量
+        'unitprice' => 1200, //単価
+        'taxrate' => 10, //税率
+        'amount' => 0 //税抜き金額
+    ],
+    [
+        'order' => 'USBメモリ', //項目
+        'quantity' => 10, //数量
+        'unitprice' => 800, //単価
+        'taxrate' => 8, //税率
+        'amount' => 0 //税抜き金額
+    ],
+    [
+        'order' => 'SDカード', //項目
+        'quantity' => 20, //数量
+        'unitprice' => 1280, //単価
+        'taxrate' => 8, //税率
+        'amount' => 0 //税抜き金額
+    ],
+    [
+        'order' => 'USBケーブル', //項目
+        'quantity' => 15, //数量
+        'unitprice' => 720, //単価
+        'taxrate' => 8, //税率
+        'amount' => 0 //税抜き金額
+    ],
+    [
+        'order' => 'マウス', //項目
+        'quantity' => 5, //数量
+        'unitprice' => 1350, //単価
+        'taxrate' => 10, //税率
+        'amount' => 0 //税抜き金額
+    ],
+    [
+        'order' => 'キーボード', //項目
+        'quantity' => 5, //数量
+        'unitprice' => 1500, //単価
+        'taxrate' => 10, //税率
+        'amount' => 0 //税抜き金額
+    ]
+];
+
+foreach ($orders as &$order) {
+    $order['amount'] = $order['quantity'] * $order['unitprice'];
+    if ($order['taxrate'] == 10) {
+        $data['cn10taxamount'] += $order['amount'];
+    } else {
+        $data['cn8taxamount'] += $order['amount'];
     }
+}
+unset($order);
 
-    $data['cn10total'] = $data['cn10taxamount'] * 1.1;
-    $data['cn8total'] = $data['cn8taxamount'] * 1.08;
-    $data['cntaxamount'] = $data['cn10taxamount'] + $data['cn8taxamount'];
-    $data['subtotal'] = ($data['cn10taxamount'] * 0.1) + ($data['cn8taxamount'] * 0.08);
-    $data['total'] = ($data['cn10total'] + $data['cn8total']) . '円';
-    $data['esprice'] = $data['cn10total'] + $data['cn8total'] . '円';
+$data['cn10total'] = $data['cn10taxamount'] * 1.1;
+$data['cn8total'] = $data['cn8taxamount'] * 1.08;
+$data['cntaxamount'] = $data['cn10taxamount'] + $data['cn8taxamount'];
+$data['subtotal'] = ($data['cn10taxamount'] * 0.1) + ($data['cn8taxamount'] * 0.08);
+$data['total'] = ($data['cn10total'] + $data['cn8total']) . '円';
+$data['esprice'] = $data['cn10total'] + $data['cn8total'] . '円';
 
-    $_SESSION['data'] = $data;
-    $_SESSION['orders'] = $orders;
+$_SESSION['data'] = $data;
+$_SESSION['orders'] = $orders;
 ?>
 <!DOCTYPE html>
 <html lanb="ja">
@@ -136,13 +139,13 @@
                         </tr>
                         <tr>
                             <td>10%対象）</td>
-                            <td>'.$data['cn10taxamount'].'</td>
-                            <td>'.$data['cn10total'].'</td>
+                            <td>' . $data['cn10taxamount'] . '</td>
+                            <td>' . $data['cn10total'] . '</td>
                         </tr>
                         <tr>
                             <td>8%対象）</td>
-                            <td>'.$data['cn8taxamount'].'</td>
-                            <td>'.$data['cn8total'].'</td>
+                            <td>' . $data['cn8taxamount'] . '</td>
+                            <td>' . $data['cn8total'] . '</td>
                         </tr>
                     </table>
                 </td>
@@ -152,15 +155,15 @@
                     <table border="1" style="width: 100%;">
                         <tr>
                             <td style="width: 50%">小計</td>
-                            <td>'.$data['cntaxamount'].'</td>
+                            <td>' . $data['cntaxamount'] . '</td>
                         </tr>
                         <tr>
                             <td>消費税額</td>
-                            <td>'.$data['subtotal'].'</td>
+                            <td>' . $data['subtotal'] . '</td>
                         </tr>
                         <tr>
                             <td><b>合計</b></td>
-                            <td><b>'.$data['total'].'</b></td>
+                            <td><b>' . $data['total'] . '</b></td>
                         </tr>
                     </table>
                 </td>
