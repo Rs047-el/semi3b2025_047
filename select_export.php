@@ -76,11 +76,15 @@ $orders = [
     ]
 ];
 
-foreach ($orders as &$order) {
+foreach ($orders as &$order)
+{
     $order['amount'] = $order['quantity'] * $order['unitprice'];
-    if ($order['taxrate'] == 10) {
+    if ($order['taxrate'] == 10)
+    {
         $data['cn10taxamount'] += $order['amount'];
-    } else {
+    }
+    else
+    {
         $data['cn8taxamount'] += $order['amount'];
     }
 }

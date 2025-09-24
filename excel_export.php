@@ -47,18 +47,22 @@ $orconfig = [
     'amount' => 'K' //税抜き金額
 ];
 
-foreach ($config as $key => $value) {
+foreach ($config as $key => $value)
+{
     //setCellValue([挿入するセル],[データ]);
     $sheet->setCellValue($value[0] . $value[1], $data[$key]);
 }
-for ($i = 0; $i < count($orders); $i++) {
-    foreach ($orconfig as $key => $order) {
+for ($i = 0; $i < count($orders); $i++)
+{
+    foreach ($orconfig as $key => $order)
+    {
         $sheet->setCellValue($order . $i + 15, $orders[$i][$key]);
     }
 }
 
 // 出力時に余計な出力がないようにバッファをクリア
-if (ob_get_length()) {
+if (ob_get_length())
+{
     ob_end_clean();
 }
 
