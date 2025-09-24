@@ -121,9 +121,11 @@ $_SESSION['orders'] = $orders;
             <th style="width: 10%;">税抜金額</th>
         </tr>
         <?php
-        foreach ($orders as $order) {
+        foreach ($orders as $order)
+        {
             echo '<tr>';
-            foreach ($order as $value) {
+            foreach ($order as $value)
+            {
                 echo '<td>' . $value . '</td>';
             }
             echo '</tr>';
