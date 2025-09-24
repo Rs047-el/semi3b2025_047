@@ -8,7 +8,8 @@ $data = $_SESSION['data'] ?? [];
 $orders = $_SESSION['orders'] ?? [];
 
 // セッションに必要な情報が揃っているかチェック
-if (empty($data) || !is_array($orders)) {
+if (empty($data) || !is_array($orders))
+{
     throw new RuntimeException('必要な見積データがセッション内にありません。');
 }
 
@@ -52,8 +53,10 @@ $html = <<<HTML
             <th style="width: 10%;">税抜金額</th>
         </tr>
 HTML;
-for ($i = 0; $i < 16; $i++) {
-    if (isset($orders[$i]) && $orders[$i]) {
+for ($i = 0; $i < 16; $i++)
+{
+    if (isset($orders[$i]) && $orders[$i])
+    {
         $order = $orders[$i];
         $html .= <<<HTML
         <tr>
@@ -64,7 +67,9 @@ for ($i = 0; $i < 16; $i++) {
             <td>$order[amount]</td>
         </tr>
         HTML;
-    } else {
+    }
+    else
+    {
         $html .= <<<HTML
         <tr>
             <td>　</td>
