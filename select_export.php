@@ -68,7 +68,6 @@ $data = [
     'subtotal' => 0, //消費税額
     'total'  => '', //合計
     'remarks'  => '特になし', //備考
-    'orders' => $orders1
 ];
 
 foreach ($orders as &$order) {
@@ -79,7 +78,6 @@ foreach ($orders as &$order) {
         $data['cn8taxamount'] += $order['amount'];
     }
 }
-unset($order);
 
 $data['cn10total'] = $data['cn10taxamount'] * 1.1;
 $data['cn8total'] = $data['cn8taxamount'] * 1.08;
@@ -87,7 +85,8 @@ $data['cntaxamount'] = $data['cn10taxamount'] + $data['cn8taxamount'];
 $data['subtotal'] = ($data['cn10taxamount'] * 0.1) + ($data['cn8taxamount'] * 0.08);
 $data['total'] = ($data['cn10total'] + $data['cn8total']) . '円';
 $data['esprice'] = $data['cn10total'] + $data['cn8total'] . '円';
-
+$_SESSION['data'] = $data;
+$_SESSION['orders'] = $orders;
 ?>
 <!DOCTYPE html>
 <html lanb="ja">
@@ -164,19 +163,6 @@ $data['esprice'] = $data['cn10total'] + $data['cn8total'] . '円';
         </table>';
         ?>
     </table>
-    <h3>出力するデータの選択</h3>
-    <form action="select_export.php" method="post">
-        <?php
-        if($selected == 2){
-            echo '<input type="radio" name="select" value="1" />北九';
-            echo '<input type="radio" name="select" value="2" checked />福岡';
-        } else {
-            echo '<input type="radio" name="select" value="1" checked />北九';
-            echo '<input type="radio" name="select" value="2" />福岡';
-        }
-        ?>
-        <br>
-        <input type="submit" name="a" value="変更" />
     </form>
     <h3>データの出力形式を選択</h3>
     <form action="select_check.php" method="post">
