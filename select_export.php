@@ -2,73 +2,21 @@
 
 declare(strict_types=1);
 session_start();
+require_once 'data.php';
 
-$orders = [
-    [
-        'order' => 'ホワイトボード', //項目
-        'quantity' => 1, //数量
-        'unitprice' => 11980, //単価
-        'taxrate' => 10, //税率
-        'amount' => 0 //税抜き金額
-    ],
-    [
-        'order' => 'マーカー（黒）', //項目
-        'quantity' => 100, //数量
-        'unitprice' => 132, //単価
-        'taxrate' => 10, //税率
-        'amount' => 0 //税抜き金額
-    ],
-    [
-        'order' => 'マーカー（赤）', //項目
-        'quantity' => 50, //数量
-        'unitprice' => 132, //単価
-        'taxrate' => 10, //税率
-        'amount' => 0 //税抜き金額
-    ],
-    [
-        'order' => 'マーカー（青）', //項目
-        'quantity' => 50, //数量
-        'unitprice' => 132, //単価
-        'taxrate' => 10, //税率
-        'amount' => 0 //税抜き金額
-    ],
-    [
-        'order' => 'プリント用紙（A4）500枚x10冊', //項目
-        'quantity' => 10, //数量
-        'unitprice' => 3890, //単価
-        'taxrate' => 10, //税率
-        'amount' => 0 //税抜き金額
-    ],
-    [
-        'order' => 'プリンターインク（4色セット）', //項目
-        'quantity' => 100, //数量
-        'unitprice' => 4102, //単価
-        'taxrate' => 10, //税率
-        'amount' => 0 //税抜き金額
-    ]
-];
+$selected = $_POST['select'] ?? 1;
 
-$data = [
-    'coname' => '北九', //受注者名
-    'coaddress' => '福岡県北九州市', //受注者住所
-    'cotel' => '092-8765-4321', //受注者TEL
-    'no' => 1, //ナンバー
-    'day' => '2025/7/2', //発行日
-    'esprice' => '',
-    'deadline' => '2025/7/28', //期限
-    'clname' => '九州産業', //発注者名
-    'claddress' => '福岡県福岡市東区', //発注者住所
-    'cltel' => '092-1234-5678', //発注者TEL
-    'clmaile' => 'kyusan*******@kyusan.ac.jp', //発注者メールアドレス
-    'cn10taxamount' => 0, //消費税10％ 税抜合計
-    'cn10total' => 0,
-    'cn8taxamount' => 0, //消費税8％ 税抜合計
-    'cn8total' => 0,
-    'cntaxamount' => 0, //小計 
-    'subtotal' => 0, //消費税額
-    'total'  => '', //合計
-    'remarks'  => '特になし', //備考
-];
+switch($selected){
+    case 1:
+        $data = $data1;
+        break;
+    case 2:
+        $data = $data2;
+        break;
+    default:
+        $data = $data1; // デフォルトを設定して安全にする
+}
+$orders = $data['orders'] ?? [];
 
 foreach ($orders as &$order) {
     $order['amount'] = $order['quantity'] * $order['unitprice'];
@@ -78,6 +26,7 @@ foreach ($orders as &$order) {
         $data['cn8taxamount'] += $order['amount'];
     }
 }
+unset($order);
 
 $data['cn10total'] = $data['cn10taxamount'] * 1.1;
 $data['cn8total'] = $data['cn8taxamount'] * 1.08;
@@ -85,8 +34,7 @@ $data['cntaxamount'] = $data['cn10taxamount'] + $data['cn8taxamount'];
 $data['subtotal'] = ($data['cn10taxamount'] * 0.1) + ($data['cn8taxamount'] * 0.08);
 $data['total'] = ($data['cn10total'] + $data['cn8total']) . '円';
 $data['esprice'] = $data['cn10total'] + $data['cn8total'] . '円';
-$_SESSION['data'] = $data;
-$_SESSION['orders'] = $orders;
+
 ?>
 <!DOCTYPE html>
 <html lanb="ja">
@@ -163,6 +111,19 @@ $_SESSION['orders'] = $orders;
         </table>';
         ?>
     </table>
+    <h3>出力するデータの選択</h3>
+    <form action="select_export.php" method="post">
+        <?php
+        if($selected == 2){
+            echo '<input type="radio" name="select" value="1" />北九';
+            echo '<input type="radio" name="select" value="2" checked />福岡';
+        } else {
+            echo '<input type="radio" name="select" value="1" checked />北九';
+            echo '<input type="radio" name="select" value="2" />福岡';
+        }
+        ?>
+        <br>
+        <input type="submit" name="a" value="変更" />
     </form>
     <h3>データの出力形式を選択</h3>
     <form action="select_check.php" method="post">
