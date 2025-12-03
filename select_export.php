@@ -35,6 +35,9 @@ $data['subtotal'] = ($data['cn10taxamount'] * 0.1) + ($data['cn8taxamount'] * 0.
 $data['total'] = ($data['cn10total'] + $data['cn8total']) . '円';
 $data['esprice'] = $data['cn10total'] + $data['cn8total'] . '円';
 
+$_SESSION['data'] = $data;
+$_SESSION['orders'] = $orders;
+ 
 ?>
 <!DOCTYPE html>
 <html lanb="ja">
