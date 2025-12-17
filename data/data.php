@@ -1,6 +1,12 @@
 <?php
 $uname = 'kyusan';
 $password = '9323';
+$u_data = [
+    'clname' => '九州産業', //発注者名
+    'claddress' => '福岡県福岡市東区', //発注者住所
+    'cltel' => '092-1234-5678', //発注者TEL
+    'clmaile' => 'kyusan*******@kyusan.ac.jp', //発注者メールアドレス
+];
 
 $orders1 = [
     [
@@ -55,10 +61,6 @@ $data1 = [
     'day' => '2025/7/2', //発行日
     'esprice' => '',
     'deadline' => '2025/7/28', //期限
-    'clname' => '九州産業', //発注者名
-    'claddress' => '福岡県福岡市東区', //発注者住所
-    'cltel' => '092-1234-5678', //発注者TEL
-    'clmaile' => 'kyusan*******@kyusan.ac.jp', //発注者メールアドレス
     'cn10taxamount' => 0, //消費税10％ 税抜合計
     'cn10total' => 0,
     'cn8taxamount' => 0, //消費税8％ 税抜合計
@@ -130,10 +132,6 @@ $data2 = [
     'day' => '2025/7/2', //発行日
     'esprice' => '',
     'deadline' => '2025/7/28', //期限
-    'clname' => '九州産業', //発注者名
-    'claddress' => '福岡県福岡市東区', //発注者住所
-    'cltel' => '092-1234-5678', //発注者TEL
-    'clmaile' => 'kyusan*******@kyusan.ac.jp', //発注者メールアドレス
     'cn10taxamount' => 0, //消費税10％ 税抜合計
     'cn10total' => 0,
     'cn8taxamount' => 0, //消費税8％ 税抜合計

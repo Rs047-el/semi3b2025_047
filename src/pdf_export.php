@@ -1,9 +1,10 @@
 <?php
 $data = $_SESSION['data'] ?? [];
+$u_data = $_SESSION['u_data'] ?? [];
 $orders = $_SESSION['orders'] ?? [];
 
 // セッションに必要な情報が揃っているかチェック
-if (empty($data) || !is_array($orders)) 
+if (empty($data) || empty($u_data) || !is_array($orders)) 
 {
     throw new RuntimeException('必要な見積データがセッション内にありません。');
 }
@@ -36,7 +37,7 @@ $html = <<<HTML
     <table style ="border-spacing: 0; font-size:17px;"><tr><td>$data[coname]</td></tr><tr><td>住所:$data[coaddress]</td></tr><tr><td>Tell:$data[cotel]</td></tr></table>
     <div style="text-align: right;">No:$data[no]</div><br>
     <div style="text-align: right;">発行日:$data[day]</div><br><br>
-    <table style="width: 20%; margin-left: auto; margin-right: 0; border-spacing: 0; font-size:17px;"><tr><td>$data[clname]<td></tr><tr><td>住所:$data[claddress]</td></tr><tr><td>Tell:$data[cltel]</td></tr><tr><td>E-mail:$data[clmaile]</td></tr></table><br>
+    <table style="width: 20%; margin-left: auto; margin-right: 0; border-spacing: 0; font-size:17px;"><tr><td>$u_data[clname]<td></tr><tr><td>住所:$u_data[claddress]</td></tr><tr><td>Tell:$u_data[cltel]</td></tr><tr><td>E-mail:$u_data[clmaile]</td></tr></table><br>
     <h2><u>お見積り金額:$data[total]</u><br>
     <b><u>有効期限：$data[deadline]</u></b></h2><br>
     <table border="1" style="border-collapse: collapse; width: 100%;">

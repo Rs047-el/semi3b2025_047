@@ -11,7 +11,7 @@ $sheet = $spreadsheet->getActiveSheet();
 // データを設定
 
 $data = $_SESSION['data'];
-
+$u_data = $_SESSION['u_data'];
 $orders = $_SESSION['orders'];
 
 $config = [
@@ -22,10 +22,6 @@ $config = [
     'day' => ['K', 5], //発行日
     'esprice' => ['D', 11], //見積金額
     'deadline' => ['D', 12], //期限
-    'clname' => ['G', 7], //発注者名
-    'claddress' => ['H', 8], //発注者住所
-    'cltel' => ['H', 9], //発注者TEL
-    'clmaile' => ['H', 10], //発注者メールアドレス
     'cn10taxamount' => ['D', 32], //消費税10％ 税抜合計
     'cn10total' => ['E', 32], //消費税10％ 合計
     'cn8taxamount' => ['D', 33], //消費税8％ 税抜合計
@@ -35,7 +31,12 @@ $config = [
     'total'  => ['I', 33], //合計
     'remarks'  => ['B', 36] //備考
 ];
-
+$uconfig=[
+    'clname' => ['G', 7], //発注者名
+    'claddress' => ['H', 8], //発注者住所
+    'cltel' => ['H', 9], //発注者TEL
+    'clmaile' => ['H', 10], //発注者メールアドレス
+];
 $orconfig = [
     'order' => 'B', //項目
     'quantity' => 'G', //数量
@@ -47,6 +48,9 @@ $orconfig = [
 foreach ($config as $key => $value) {
     //setCellValue([挿入するセル],[データ]);
     $sheet->setCellValue($value[0] . $value[1], $data[$key]);
+}
+foreach($uconfig as $key => $value){
+    $sheet->setCellValue($value[0] . $value[1], $u_data[$key]);
 }
 for ($i = 0; $i < count($orders); $i++) {
     foreach ($orconfig as $key => $order) {
