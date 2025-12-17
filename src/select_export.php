@@ -1,9 +1,4 @@
 <?php
-
-declare(strict_types=1);
-session_start();
-require_once 'data.php';
-
 $selected = $_POST['select'] ?? 1;
 
 switch($selected){
@@ -37,7 +32,7 @@ $data['esprice'] = $data['cn10total'] + $data['cn8total'] . '円';
 
 $_SESSION['data'] = $data;
 $_SESSION['orders'] = $orders;
- 
+
 ?>
 <!DOCTYPE html>
 <html lanb="ja">
@@ -115,7 +110,7 @@ $_SESSION['orders'] = $orders;
         ?>
     </table>
     <h3>出力するデータの選択</h3>
-    <form action="select_export.php" method="post">
+    <form action="?do=select_export" method="post">
         <?php
         if($selected == 2){
             echo '<input type="radio" name="select" value="1" />北九';
@@ -129,7 +124,7 @@ $_SESSION['orders'] = $orders;
         <input type="submit" name="a" value="変更" />
     </form>
     <h3>データの出力形式を選択</h3>
-    <form action="select_check.php" method="post">
+    <form action="?do=select_check" method="post">
         <input type="radio" name="select" value="e" />Excel
         <input type="radio" name="select" value="p" />PDF
         <br>

@@ -1,16 +1,15 @@
 <?php
-declare(strict_types=1);
-session_start();
 $log_uname = $_POST['uid'] ?? '';
 $log_pw = $_POST['pass'] ?? '';
-require_once 'data.php';
+
+$_SESSION['uid'] = $log_uname;
 
 if($log_uname == $uname && $log_pw == $password){
     $_SESSION['tname'] = $log_uname;
-    header('Location:select_export.php');
+    header('Location:?do=select_export');
     exit;
 } else {
-    header('Location:login.php');
+    header('Location:?do=login');
     exit;
 }
 ?>

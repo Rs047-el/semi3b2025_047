@@ -1,12 +1,9 @@
 <?php
-require 'vendor/autoload.php';
-session_start();
-
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 // スプレッドシートオブジェクトを作成
-$spreadsheet = IOFactory::load('ExcelTemplate.xlsx');
+$spreadsheet = IOFactory::load('data/ExcelTemplate.xlsx');
 
 // アクティブなシートを取得
 $sheet = $spreadsheet->getActiveSheet();

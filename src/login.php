@@ -1,7 +1,3 @@
-<?php
-declare(strict_types=1);
-session_start();
-?>
 <!DOCTYPE html>
 <html lanb="ja">
 
@@ -12,7 +8,7 @@ session_start();
 </head>
 
 <body>
-    <form action="login_check.php" method="post">
+    <form action="?do=login_check" method="post">
         <table class="table table-hover">
             <tr>
                 <td>ユーザ名：</td>
