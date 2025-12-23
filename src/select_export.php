@@ -13,9 +13,9 @@ switch ($selected) {
 $orders = $_POST['orders'] ?? ($data['orders'] ?? []);
 foreach ($orders as &$order) {
     $order['amount'] = $order['quantity'] * $order['unitprice'];
-    if ($order['taxrate'] == 10) {
+    if ((int)$order['taxrate'] === 10) {
         $data['cn10taxamount'] += $order['amount'];
-    } else {
+    } elseif ((int)$order['taxrate'] === 8) {
         $data['cn8taxamount'] += $order['amount'];
     }
 }
@@ -47,7 +47,11 @@ $_SESSION['orders'] = $orders;
     }
 
     .big-text input[type="text"] {
-        font-size: 18px;
+        font-size: 17px;
+    }
+
+    .big-text textarea{
+        font-size: 15px;
     }
 </style>
 
@@ -97,25 +101,37 @@ $_SESSION['orders'] = $orders;
                     <td>メールアドレス: <input type="text" name="clmaile" value="<?= htmlspecialchars($u_data['clmaile'] ?? '') ?>"></td>
                 </tr>
             </table>
+            <hr>
             <h3>注文商品一覧</h3>
-            <table border="1" style="border-collapse: collapse; width: 100%;">
+            <table id="ordersTable" border="1" style="border-collapse: collapse; width: 100%;">
                 <tr>
                     <th style="width: 60%;">項目</th>
                     <th style="width: 10%;">数量</th>
                     <th style="width: 10%;">単価</th>
                     <th style="width: 10%;">税率</th>
                     <th style="width: 10%;">税抜金額</th>
+                    <th style="width: 5%;">削除</th>
                 </tr>
                 <?php foreach ($orders as $i => $order) : ?>
                     <tr>
                         <?php foreach ($order as $key => $value) : ?>
-                            <td>
-                                <input type="text" name="orders[<?= $i ?>][<?= htmlspecialchars($key) ?>]" value="<?= htmlspecialchars($value) ?>" style="width:100%; box-sizing:border-box;">
-                            </td>
+                            <?php if ($key == 'amount') : ?>
+                                <td class="amount-cell">
+                                    <?= htmlspecialchars($value) ?>
+                                </td>
+                            <?php else : ?>
+                                <td>
+                                    <input type="text" name="orders[<?= $i ?>][<?= htmlspecialchars($key) ?>]" value="<?= htmlspecialchars($value) ?>" style="width:100%; box-sizing:border-box;" oninput="recalculateRow(this)">
+                                </td>
+                            <?php endif; ?>
                         <?php endforeach; ?>
+                        <td style="text-align:center;">
+                            <button type="button" onclick="removeOrderRow(this)">－</button>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             </table>
+            <button type="button" onclick="addOrderRow()">＋ 行を追加</button>
             <table style="width: 100%;">
                 <tr>
                     <td style="width: 30%; vertical-align: top;">
@@ -157,7 +173,10 @@ $_SESSION['orders'] = $orders;
                 </tr>
             </table>
             <br>
-            <input type="submit" name="a" value="編集" />
+            <button type="submit" name="a">合計金額を再計算</button>
+            <hr>備考<br>
+            <textarea name="remarks" rows="5" style="width:100%;"><?= htmlspecialchars($data['remarks'] ?? '', ENT_QUOTES, 'UTF-8') ?></textarea>
+            <hr>
         </form>
     </div>
     <h3>データの出力形式を選択</h3>
@@ -167,6 +186,69 @@ $_SESSION['orders'] = $orders;
         <br>
         <input type="submit" name="a" value="出力" />
     </form>
+    <br>
 </body>
 
 </html>
+<script>
+    let orderIndex = <?= count($orders1) ?>;
+
+    function addOrderRow() {
+        const table = document.getElementById('ordersTable');
+        const row = table.insertRow(-1);
+
+        row.innerHTML = `
+        <td>
+            <input type="text" name="orders[${orderIndex}][order]"
+                   style="width:100%; box-sizing:border-box;"
+                   oninput="recalculateRow(this)">
+        </td>
+        <td>
+            <input type="text" name="orders[${orderIndex}][quantity]"
+                   value="0"
+                   style="width:100%; box-sizing:border-box;"
+                   oninput="recalculateRow(this)">
+        </td>
+        <td>
+            <input type="text" name="orders[${orderIndex}][unitprice]"
+                   value="0"
+                   style="width:100%; box-sizing:border-box;"
+                   oninput="recalculateRow(this)">
+        </td>
+        <td>
+            <input type="text" name="orders[${orderIndex}][taxrate]"
+                   value="10"
+                   style="width:100%; box-sizing:border-box;">
+        </td>
+        <td class="amount-cell">0</td>
+        <td style="text-align:center;">
+            <button type="button" onclick="removeOrderRow(this)">－</button>
+        </td>
+    `;
+
+        orderIndex++;
+    }
+
+
+    function removeOrderRow(button) {
+        const row = button.closest('tr');
+        row.remove();
+    }
+
+    function recalculateRow(input) {
+        const row = input.closest('tr');
+
+        const quantityInput = row.querySelector('input[name*="[quantity]"]');
+        const unitpriceInput = row.querySelector('input[name*="[unitprice]"]');
+        const amountCell = row.querySelector('.amount-cell');
+
+        if (!quantityInput || !unitpriceInput || !amountCell) return;
+
+        const quantity = parseFloat(quantityInput.value) || 0;
+        const unitprice = parseFloat(unitpriceInput.value) || 0;
+
+        const amount = quantity * unitprice;
+
+        amountCell.textContent = amount.toLocaleString();
+    }
+</script>
